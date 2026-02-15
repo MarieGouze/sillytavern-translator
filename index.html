@@ -3774,7 +3774,21 @@ ${!!modals[MK.EXP] && html`<${Modal} show onClose=${() => openModal(MK.EXP, 0)} 
 ${!!modals[MK.BATCH] && html`<${BatchModal} show onClose=${() => openModal(MK.BATCH, 0)} onStart=${(f, gp) => handleBatchStart(f, gp, 'basic')} title="🌸 基础翻译" fields=${BATCH_BASIC} antiTrunc=${antiTrunc} setAntiTrunc=${setAntiTrunc} greetTotal=${greetTotal} concurrency=${concurrency} setConcurrency=${setConcurrency} streamEnabled=${streamEnabled} setStreamEnabled=${setStreamEnabled}/>`}
 ${!!modals[MK.ADV] && html`<${BatchModal} show onClose=${() => openModal(MK.ADV, 0)} onStart=${(f, gp) => handleBatchStart(f, gp, 'adv')} title="🌸 高级翻译" fields=${BATCH_ADV} antiTrunc=${antiTrunc} setAntiTrunc=${setAntiTrunc} greetTotal=${0} concurrency=${concurrency} setConcurrency=${setConcurrency} streamEnabled=${streamEnabled} setStreamEnabled=${setStreamEnabled}/>`}
 ${!!modals[MK.WB] && html`<${BatchModal} show onClose=${() => openModal(MK.WB, 0)} onStart=${(f, gp) => handleBatchStart(f, gp, 'wb')} title="🌸 世界书翻译" fields=${Object.fromEntries((data?.book_entries || []).map(e => [e._id || e.name, 1]))} antiTrunc=${antiTrunc} setAntiTrunc=${setAntiTrunc} greetTotal=${0} concurrency=${concurrency} setConcurrency=${setConcurrency} streamEnabled=${streamEnabled} setStreamEnabled=${setStreamEnabled}/>`}
-<${TranslationModal} show=${!!modals[MK.CMP]} onClose=${closeTranslation} items=${compareItems} setItems=${setCompareItems} onApply=${applyTranslation} translating=${translating} progress=${progress} onRetry=${handleRetry} onCancel=${cancelTranslation} eta=${eta} minimized=${trMinimized} onMinimize=${() => setTrMin(true)} onRestore=${() => setTrMin(false)}/>
+${!!modals[MK.CMP] && html`<${TranslationModal}
+  show
+  onClose=${closeTranslation}
+  items=${compareItems}
+  setItems=${setCompareItems}
+  onApply=${applyTranslation}
+  translating=${translating}
+  progress=${progress}
+  onRetry=${handleRetry}
+  onCancel=${cancelTranslation}
+  eta=${eta}
+  minimized=${trMinimized}
+  onMinimize=${() => setTrMin(true)}
+  onRestore=${() => setTrMin(false)}
+/>`}
 ${fullEditor.show && html`<${Modal} show onClose=${() => setFullEditor(p => ({ ...p, show: false }))} title=${fullEditor.title} fullscreen footer=${html`<><button class="btn primary" onClick=${handleFESave}>💾</button><button class="btn secondary" onClick=${() => setFullEditor(p => ({ ...p, show: false }))}>取消</button></>`}><div class="full-editor-stats"><span>📝 ${charCount(fullEditor.value)} 字</span><span>📊 ~${estimateTokens(fullEditor.value)} tokens</span>${estimateTokens(fullEditor.value) > TOKEN_WARN_THRESHOLD && html`<span class="field-warning">⚠️ 内容较长</span>`}<span style=${{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-soft)' }}>💡 Ctrl+S 保存</span></div><textarea class="full-editor-textarea" value=${fullEditor.value} onChange=${e => setFullEditor(p => ({ ...p, value: e.target.value }))} onKeyDown=${e => { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); handleFESave() } }}/><//>`}
 ${''/* @SLOT:SYNC_MODAL_RENDER */}${''/* @SLOT:SYNC_MODAL_RENDER_END */}
 ${!!modals[MK.GEN] && html`<${GenModal} show onClose=${() => openModal(MK.GEN, 0)} onApply=${handleGenApply} pv=${providers} pi=${providerIdx} model=${model} gi=${giRef.current}/>`}
